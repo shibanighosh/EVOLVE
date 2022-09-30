@@ -7,7 +7,8 @@ WORKDIR /evolve
 COPY . ./src
 
 # Set the flask environment variable
-ENV FLASK_APP src/server/server.py
+# ENV FLASK_APP src/server/server.py
+ENV FLASK_APP src/server/server:app
 ENV FLASK_RUN_HOST 0.0.0.0
 ENV PYTHONPATH '${PYTONPATH}:/evolve/src'
 

@@ -253,12 +253,12 @@ class APIData:
             
 
             self.dashboard_data['battery_metric'] = {
-                'c_energy': int(np.nansum(battery_result['battery_chargekw'])*FACTOR/1000) if \
-                            int(np.nansum(battery_result['battery_chargekw'])*FACTOR/1000) !=0 else \
-                                round(np.nansum(battery_result['battery_chargekw'])*FACTOR/1000,3),
-                'd_energy': int(np.nansum(battery_result['battery_dischargekw'])*FACTOR/1000) if \
-                            int(np.nansum(battery_result['battery_dischargekw'])*FACTOR/1000) !=0 else \
-                                round(np.nansum(battery_result['battery_dischargekw'])*FACTOR/1000,3),
+                'c_energy': int(np.nansum(battery_result['battery_chargekw'])/(FACTOR*1000)) if \
+                            int(np.nansum(battery_result['battery_chargekw'])/(FACTOR*1000)) !=0 else \
+                                round(np.nansum(battery_result['battery_chargekw'])/(FACTOR*1000),3),
+                'd_energy': int(np.nansum(battery_result['battery_dischargekw'])/(FACTOR*1000)) if \
+                            int(np.nansum(battery_result['battery_dischargekw'])/(FACTOR*1000)) !=0 else \
+                                round(np.nansum(battery_result['battery_dischargekw'])/(FACTOR*1000),3),
                 'cd_cycle': self.count_cycle(battery_result['battery_chargekw'])
             }
 
@@ -285,10 +285,10 @@ class APIData:
             self.latest_profile = netloadprofile
 
             self.dashboard_data['battery_metric'] = {
-                'c_energy': int(sum(charging_profile)*FACTOR/1000) if int(sum(charging_profile)*FACTOR/1000) !=0 else \
-                                round(sum(charging_profile)*FACTOR/1000,3),
-                'd_energy': int(sum(discharging_profile)*FACTOR/1000) if int(sum(discharging_profile)*FACTOR/1000) !=0 else \
-                                round(sum(discharging_profile)*FACTOR/1000,3),
+                'c_energy': int(sum(charging_profile)/(FACTOR*1000)) if int(sum(charging_profile)/(FACTOR*1000)) !=0 else \
+                                round(sum(charging_profile)/(FACTOR*1000),3),
+                'd_energy': int(sum(discharging_profile)/(FACTOR*1000)) if int(sum(discharging_profile)/(FACTOR*1000)) !=0 else \
+                                round(sum(discharging_profile)/(FACTOR*1000),3),
                 'cd_cycle': self.count_cycle(charging_profile)
             }
         
@@ -374,7 +374,7 @@ class APIData:
 
         self.dashboard_data['dt_metric'] = {
             'peakpower': round(max(self.trans_base_load),1),
-            'energy': round(np.nansum(self.trans_base_load)/1000,1),
+            'energy': round(np.nansum(self.trans_base_load)/(FACTOR*1000),1),
             'ramp': round(max([abs(self.trans_base_load[i+1]-self.trans_base_load[i]) for i \
                 in range(len(self.trans_base_load)-1)]),1),
             'avg2peak': round(np.nansum(self.trans_base_load)/(len(self.trans_base_load)\
@@ -382,8 +382,8 @@ class APIData:
         }
 
         self.dashboard_data['solar_output'][0]['data'] = self.pv_generation
-        self.dashboard_data['solar_metric']['energy'] = int(np.nansum(self.pv_generation)*FACTOR/1000) if \
-               int(np.nansum(self.pv_generation)*FACTOR/1000) !=0 else round(np.nansum(self.pv_generation)*FACTOR/1000,3)
+        self.dashboard_data['solar_metric']['energy'] = int(np.nansum(self.pv_generation)/(FACTOR*1000)) if \
+               int(np.nansum(self.pv_generation)/(FACTOR*1000)) !=0 else round(np.nansum(self.pv_generation)/(FACTOR*1000),3)
         self.dashboard_data['solar_metric']['peak_power'] = int(max(self.pv_generation))
         
         if not int(self.config_dict['evnumber']) <=0:
