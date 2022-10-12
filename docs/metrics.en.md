@@ -135,6 +135,13 @@ This metric represents number of charging/discharging cycles for energy storage.
 
 
 
+## EV metrics
+
+---
+
+### Peak load
+
+Peak load is defined as maximum load for specified time duration. With EVs, peak load represent the maximum base+EV loads
 
 
 
